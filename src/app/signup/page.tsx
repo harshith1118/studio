@@ -55,6 +55,7 @@ export default function SignupPage() {
       newValue: name
     }));
     
+    // Redirect to home page
     router.push("/");
     setIsLoading(false);
   }

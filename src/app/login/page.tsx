@@ -45,6 +45,7 @@ export default function LoginPage() {
       newValue: email.split("@")[0]
     }));
     
+    // Redirect to home page
     router.push("/");
     setIsLoading(false);
   }
