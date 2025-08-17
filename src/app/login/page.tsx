@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -19,9 +19,18 @@ import { Leaf, Mail, Key } from "lucide-react";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [formKey, setFormKey] = useState(0); // Used to reset form
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  // Reset form when component mounts
+  useEffect(() => {
+    setFormKey(prev => prev + 1);
+    setEmail("");
+    setPassword("");
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate inputs
@@ -30,20 +39,29 @@ export default function LoginPage() {
       return;
     }
     
-    // Immediate login process
-    localStorage.setItem("ai-demo-token", "demo-token");
-    localStorage.setItem("userName", email.split("@")[0]);
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("userRole", "User");
+    // Set loading state
+    setIsLoading(true);
     
-    // Dispatch storage event
-    window.dispatchEvent(new StorageEvent('storage', {
-      key: 'userName',
-      newValue: email.split("@")[0]
-    }));
-    
-    // Redirect to home page
-    router.push("/");
+    // Simulate a small delay to show loading state (this makes the UI feel more responsive)
+    setTimeout(() => {
+      // Immediate login process
+      localStorage.setItem("ai-demo-token", "demo-token");
+      localStorage.setItem("userName", email.split("@")[0]);
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("userRole", "User");
+      
+      // Also set cookie for server-side access
+      document.cookie = "ai-demo-token=demo-token; path=/";
+      
+      // Dispatch storage event
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: 'userName',
+        newValue: email.split("@")[0]
+      }));
+      
+      // Redirect to home page
+      router.push("/");
+    }, 300); // Small delay to show loading state
   };
 
   return (
@@ -61,7 +79,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form key={formKey} onSubmit={handleSubmit} autoComplete="off">
             <div className="grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -75,6 +93,9 @@ export default function LoginPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10 border-emerald-100 focus-visible:ring-emerald-500 rounded-lg"
                     required
+                    autoComplete="email"
+                    data-lpignore="true"
+                    data-form-type="other"
                   />
                 </div>
               </div>
@@ -98,14 +119,25 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10 border-emerald-100 focus-visible:ring-emerald-500 rounded-lg"
                     required
+                    autoComplete="current-password"
+                    data-lpignore="true"
+                    data-form-type="other"
                   />
                 </div>
               </div>
               <Button 
                 type="submit"
+                disabled={isLoading}
                 className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-lg mt-2"
               >
-                Sign In
+                {isLoading ? (
+                  <div className="flex items-center">
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent mr-2"></div>
+                    Signing In...
+                  </div>
+                ) : (
+                  "Sign In"
+                )}
               </Button>
             </div>
           </form>

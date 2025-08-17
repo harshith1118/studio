@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
   // Check if the route is public
   const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route));
   
-  // Get the auth token from cookies
+  // Get the auth token from cookies (we'll store it in cookies for server-side access)
   const token = request.cookies.get('ai-demo-token');
   
   // If it's a public route, allow access

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 
 export function ProtectedLayout({
   children,
+}: {
+  children: React.ReactNode;
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();

@@ -32,7 +32,7 @@ export function Header() {
     updateUserInfo();
     
     // Listen for storage changes to update user info
-    const handleStorageChange = (e) => {
+    const handleStorageChange = (e: StorageEvent) => {
       if (e.key === "userName" || e.key === "userEmail") {
         updateUserInfo();
       }
@@ -49,6 +49,9 @@ export function Header() {
   const handleLogout = () => {
     // Clear all localStorage items
     localStorage.clear();
+    
+    // Clear cookie
+    document.cookie = "ai-demo-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     
     // Dispatch storage event to notify other components
     window.dispatchEvent(new StorageEvent('storage', {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,9 +27,20 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [formKey, setFormKey] = useState(0); // Used to reset form
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  // Reset form when component mounts
+  useEffect(() => {
+    setFormKey(prev => prev + 1);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setRole("");
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate inputs
@@ -38,20 +49,29 @@ export default function SignupPage() {
       return;
     }
     
-    // Immediate signup process
-    localStorage.setItem("ai-demo-token", "demo-token");
-    localStorage.setItem("userName", name);
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("userRole", role);
+    // Set loading state
+    setIsLoading(true);
     
-    // Dispatch storage event
-    window.dispatchEvent(new StorageEvent('storage', {
-      key: 'userName',
-      newValue: name
-    }));
-    
-    // Redirect to home page
-    router.push("/");
+    // Simulate a small delay to show loading state (this makes the UI feel more responsive)
+    setTimeout(() => {
+      // Immediate signup process
+      localStorage.setItem("ai-demo-token", "demo-token");
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("userRole", role);
+      
+      // Also set cookie for server-side access
+      document.cookie = "ai-demo-token=demo-token; path=/";
+      
+      // Dispatch storage event
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: 'userName',
+        newValue: name
+      }));
+      
+      // Redirect to home page
+      router.push("/");
+    }, 300); // Small delay to show loading state
   };
 
   return (
@@ -69,7 +89,7 @@ export default function SignupPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form key={formKey} onSubmit={handleSubmit} autoComplete="off">
             <div className="grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="name">Full Name</Label>
@@ -83,6 +103,9 @@ export default function SignupPage() {
                     onChange={(e) => setName(e.target.value)}
                     className="pl-10 border-emerald-100 focus-visible:ring-emerald-500 rounded-lg"
                     required
+                    autoComplete="name"
+                    data-lpignore="true"
+                    data-form-type="other"
                   />
                 </div>
               </div>
@@ -99,6 +122,9 @@ export default function SignupPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10 border-emerald-100 focus-visible:ring-emerald-500 rounded-lg"
                     required
+                    autoComplete="email"
+                    data-lpignore="true"
+                    data-form-type="other"
                   />
                 </div>
               </div>
@@ -115,6 +141,9 @@ export default function SignupPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10 border-emerald-100 focus-visible:ring-emerald-500 rounded-lg"
                     required
+                    autoComplete="new-password"
+                    data-lpignore="true"
+                    data-form-type="other"
                   />
                 </div>
               </div>
@@ -124,7 +153,7 @@ export default function SignupPage() {
                 <div className="relative">
                   <Briefcase className="absolute left-3 top-3 h-4 w-4 text-emerald-400" />
                   <Select value={role} onValueChange={setRole} required>
-                    <SelectTrigger className="pl-10 border-emerald-100 focus:ring-emerald-500 rounded-lg">
+                    <SelectTrigger id="role" className="pl-10 border-emerald-100 focus:ring-emerald-500 rounded-lg">
                       <SelectValue placeholder="Select your role" />
                     </SelectTrigger>
                     <SelectContent>
@@ -142,9 +171,17 @@ export default function SignupPage() {
               
               <Button 
                 type="submit"
+                disabled={isLoading}
                 className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-lg mt-2"
               >
-                Create Account
+                {isLoading ? (
+                  <div className="flex items-center">
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent mr-2"></div>
+                    Creating Account...
+                  </div>
+                ) : (
+                  "Create Account"
+                )}
               </Button>
             </div>
           </form>
