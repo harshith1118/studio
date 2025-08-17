@@ -1,11 +1,25 @@
+import { Header } from "@/components/header";
 import { TryItToolkit } from "@/components/try-it-toolkit";
 
-export default function Home() {
+export default function Dashboard() {
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center bg-background p-4 sm:p-6 md:p-8">
-      <div className="w-full max-w-2xl">
-        <TryItToolkit />
-      </div>
-    </main>
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+      <Header />
+      
+      <main className="container py-6">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+            Welcome to EcoMind AI
+          </h1>
+          <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+            Sustainable AI solutions for creative and analytical tasks
+          </p>
+        </div>
+        
+        <div className="max-w-3xl mx-auto">
+          <TryItToolkit />
+        </div>
+      </main>
+    </div>
   );
 }

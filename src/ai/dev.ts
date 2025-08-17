@@ -1,1 +1,2 @@
-// Flows will be imported for their side effects in this file.
+// Local AI simulation - no external dependencies needed
+console.log('Local AI simulation ready');
