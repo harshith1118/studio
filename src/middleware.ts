@@ -8,16 +8,15 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   // Check if the route is public
-  const isPublicRoute = publicRoutes.includes(pathname);
+  const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route));
   
-  // Get the auth token from cookies (in a real app) or check localStorage
-  // Since localStorage is client-side only, we'll use a cookie for server-side checking
+  // Get the auth token from cookies
   const token = request.cookies.get('ai-demo-token');
   
   // If it's a public route, allow access
   if (isPublicRoute) {
     // If user is already authenticated and trying to access login/signup, redirect to home
-    if (token && (pathname === '/login' || pathname === '/signup')) {
+    if (token && (pathname === '/login' || pathname === '/signup' || pathname === '/forgot-password')) {
       return NextResponse.redirect(new URL('/', request.url));
     }
     return NextResponse.next();

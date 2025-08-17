@@ -17,27 +17,28 @@ import { Label } from "@/components/ui/label";
 import { Leaf, Mail } from "lucide-react";
 
 export default function ForgotPasswordPage() {
-  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const router = useRouter();
 
-  async function onSubmit(event) {
-    event.preventDefault();
-    setIsLoading(true);
-
-    // Immediate password reset process
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Validate inputs
+    if (!email) {
+      alert("Please enter your email");
+      return;
+    }
+    
     // In a real app, you would send a password reset email here
-    setTimeout(() => {
-      setIsLoading(false);
-      alert("Password reset email sent! Check your inbox.");
-    }, 500);
-  }
+    alert("Password reset email sent! Check your inbox.");
+    
+    // Redirect to login page
+    router.push("/login");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 p-4">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMSIgZmlsbD0iI2Q4ZjVmZiIgZmlsbC1vcGFjaXR5PSIwLjA1Ii8+Cjwvc3ZnPgo=')] opacity-30"></div>
-      
-      <Card className="w-full max-w-md shadow-2xl border-0 bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
+      <Card className="w-full max-w-md shadow-xl border-0 bg-white/90 backdrop-blur-sm rounded-2xl">
         <CardHeader className="text-center space-y-2 pb-4">
           <div className="mx-auto bg-gradient-to-r from-emerald-500 to-teal-600 p-3 rounded-full w-16 h-16 flex items-center justify-center">
             <Leaf className="h-8 w-8 text-white" />
@@ -50,7 +51,7 @@ export default function ForgotPasswordPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -60,20 +61,17 @@ export default function ForgotPasswordPage() {
                     id="email"
                     placeholder="Enter your email"
                     type="email"
-                    disabled={isLoading}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10 border-emerald-100 focus-visible:ring-emerald-500 rounded-lg"
+                    required
                   />
                 </div>
               </div>
               <Button 
-                disabled={isLoading} 
+                type="submit"
                 className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-lg mt-2"
               >
-                {isLoading && (
-                  <Leaf className="mr-2 h-4 w-4 animate-spin" />
-                )}
                 Send Reset Email
               </Button>
             </div>

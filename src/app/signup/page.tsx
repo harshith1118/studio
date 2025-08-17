@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,33 +23,28 @@ import {
 import { Leaf, User, Mail, Key, Briefcase } from "lucide-react";
 
 export default function SignupPage() {
-  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const router = useRouter();
 
-  // Clear form data when component mounts
-  useEffect(() => {
-    setName("");
-    setEmail("");
-    setPassword("");
-    setRole("");
-  }, []);
-
-  async function onSubmit(event) {
-    event.preventDefault();
-    setIsLoading(true);
-
-    // Immediate signup process (removed artificial delay)
-    // Set user info in localStorage
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Validate inputs
+    if (!name || !email || !password || !role) {
+      alert("Please fill in all fields");
+      return;
+    }
+    
+    // Immediate signup process
     localStorage.setItem("ai-demo-token", "demo-token");
     localStorage.setItem("userName", name);
     localStorage.setItem("userEmail", email);
     localStorage.setItem("userRole", role);
     
-    // Dispatch storage event to notify other components
+    // Dispatch storage event
     window.dispatchEvent(new StorageEvent('storage', {
       key: 'userName',
       newValue: name
@@ -57,14 +52,11 @@ export default function SignupPage() {
     
     // Redirect to home page
     router.push("/");
-    setIsLoading(false);
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 p-4">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMSIgZmlsbD0iI2Q4ZjVmZiIgZmlsbC1vcGFjaXR5PSIwLjA1Ii8+Cjwvc3ZnPgo=')] opacity-30"></div>
-      
-      <Card className="w-full max-w-md shadow-2xl border-0 bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden">
+      <Card className="w-full max-w-md shadow-xl border-0 bg-white/90 backdrop-blur-sm rounded-2xl">
         <CardHeader className="text-center space-y-2 pb-4">
           <div className="mx-auto bg-gradient-to-r from-emerald-500 to-teal-600 p-3 rounded-full w-16 h-16 flex items-center justify-center">
             <Leaf className="h-8 w-8 text-white" />
@@ -77,7 +69,7 @@ export default function SignupPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="name">Full Name</Label>
@@ -87,10 +79,10 @@ export default function SignupPage() {
                     id="name"
                     placeholder="Your full name"
                     type="text"
-                    disabled={isLoading}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="pl-10 border-emerald-100 focus-visible:ring-emerald-500 rounded-lg"
+                    required
                   />
                 </div>
               </div>
@@ -103,10 +95,10 @@ export default function SignupPage() {
                     id="email"
                     placeholder="Your email address"
                     type="email"
-                    disabled={isLoading}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10 border-emerald-100 focus-visible:ring-emerald-500 rounded-lg"
+                    required
                   />
                 </div>
               </div>
@@ -119,10 +111,10 @@ export default function SignupPage() {
                     id="password"
                     placeholder="Create a password"
                     type="password"
-                    disabled={isLoading}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10 border-emerald-100 focus-visible:ring-emerald-500 rounded-lg"
+                    required
                   />
                 </div>
               </div>
@@ -131,7 +123,7 @@ export default function SignupPage() {
                 <Label htmlFor="role">Your Role</Label>
                 <div className="relative">
                   <Briefcase className="absolute left-3 top-3 h-4 w-4 text-emerald-400" />
-                  <Select value={role} onValueChange={setRole}>
+                  <Select value={role} onValueChange={setRole} required>
                     <SelectTrigger className="pl-10 border-emerald-100 focus:ring-emerald-500 rounded-lg">
                       <SelectValue placeholder="Select your role" />
                     </SelectTrigger>
@@ -149,12 +141,9 @@ export default function SignupPage() {
               </div>
               
               <Button 
-                disabled={isLoading} 
+                type="submit"
                 className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-lg mt-2"
               >
-                {isLoading && (
-                  <Leaf className="mr-2 h-4 w-4 animate-spin" />
-                )}
                 Create Account
               </Button>
             </div>
@@ -189,7 +178,6 @@ export default function SignupPage() {
             <a href="#" className="underline underline-offset-4 hover:text-primary">
               Privacy Policy
             </a>
-            .
           </p>
         </CardFooter>
       </Card>
