@@ -4,3 +4,6 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[template.environment]
+  GEMINI_API_KEY = "Your Google Generative AI API key"
