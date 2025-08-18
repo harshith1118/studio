@@ -64,31 +64,31 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-sm">
-      <div className="container flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-2 rounded-xl">
-            <Leaf className="h-5 w-5 text-white" />
+      <div className="container flex h-14 sm:h-16 items-center justify-between px-4">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-1.5 sm:p-2 rounded-lg sm:rounded-xl">
+            <Leaf className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+            <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
               EcoMind AI
             </h1>
           </div>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                <Avatar className="h-10 w-10">
+              <Button variant="ghost" className="relative h-8 w-8 sm:h-10 sm:w-10 rounded-full">
+                <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
                   <AvatarImage src="/avatars/01.png" alt="@user" />
-                  <AvatarFallback className="bg-emerald-100 text-emerald-800">
+                  <AvatarFallback className="bg-emerald-100 text-emerald-800 text-xs sm:text-sm">
                     {userName && userName.split(' ').map(n => n[0]).join('') || "U"}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-64" align="end" forceMount>
+            <DropdownMenuContent className="w-56 sm:w-64" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
                   <p className="text-sm font-medium leading-none">{userName || "User"}</p>

@@ -6,12 +6,12 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
       <Header />
       
-      <main className="container py-6">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+      <main className="container py-4 sm:py-6 px-4 sm:px-6">
+        <div className="mb-6 sm:mb-8 text-center">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
             Welcome to EcoMind AI
           </h1>
-          <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+          <p className="text-muted-foreground mt-2 text-sm sm:text-base max-w-2xl mx-auto">
             Sustainable AI solutions for creative and analytical tasks
           </p>
         </div>

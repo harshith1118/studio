@@ -155,23 +155,23 @@ export function TryItToolkit() {
 
   return (
     <div>
-      <Card className="w-full shadow-xl border-0 bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden">
-        <CardHeader className="flex-row items-start justify-between bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-t-3xl pb-4">
-          <div className="flex items-center gap-3">
-            <div className="bg-white/20 p-2 rounded-lg">
-              <Leaf className="h-5 w-5" />
+      <Card className="w-full shadow-xl border-0 bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl overflow-hidden">
+        <CardHeader className="flex-row items-start justify-between bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-t-2xl sm:rounded-t-3xl pb-3 sm:pb-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="bg-white/20 p-1.5 sm:p-2 rounded-lg">
+              <Leaf className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
             <div>
-              <CardTitle className="font-headline text-xl">EcoMind Assistant</CardTitle>
-              <CardDescription className="text-emerald-100">Sustainable AI solutions</CardDescription>
+              <CardTitle className="font-headline text-lg sm:text-xl">EcoMind Assistant</CardTitle>
+              <CardDescription className="text-emerald-100 text-xs sm:text-sm">Sustainable AI solutions</CardDescription>
             </div>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5 sm:gap-1">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" onClick={handleCopy} disabled={!output} className="text-white hover:bg-white/20">
-                    {isCopied ? <Check className="size-4 text-green-300" /> : <Copy className="size-4" />}
+                  <Button variant="ghost" size="icon" onClick={handleCopy} disabled={!output} className="text-white hover:bg-white/20 h-8 w-8 sm:h-10 sm:w-10">
+                    {isCopied ? <Check className="size-3 sm:size-4 text-green-300" /> : <Copy className="size-3 sm:size-4" />}
                     <span className="sr-only">Copy Output</span>
                   </Button>
                 </TooltipTrigger>
@@ -182,8 +182,8 @@ export function TryItToolkit() {
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" onClick={handleClear} disabled={!prompt && !output} className="text-white hover:bg-white/20">
-                    <Trash2 className="size-4" />
+                  <Button variant="ghost" size="icon" onClick={handleClear} disabled={!prompt && !output} className="text-white hover:bg-white/20 h-8 w-8 sm:h-10 sm:w-10">
+                    <Trash2 className="size-3 sm:size-4" />
                     <span className="sr-only">Clear</span>
                   </Button>
                 </TooltipTrigger>
@@ -196,8 +196,8 @@ export function TryItToolkit() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <SheetTrigger asChild>
-                      <Button variant="ghost" size="icon" className="text-white hover:bg-white/20">
-                        <History className="size-4" />
+                      <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 h-8 w-8 sm:h-10 sm:w-10">
+                        <History className="size-3 sm:size-4" />
                         <span className="sr-only">View History</span>
                       </Button>
                     </SheetTrigger>
@@ -206,17 +206,17 @@ export function TryItToolkit() {
                     <p>View history</p>
                   </TooltipContent>
                 </Tooltip>
-                <SheetContent className="flex flex-col">
+                <SheetContent className="flex flex-col w-4/5 sm:w-3/5 max-w-md">
                   <SheetHeader>
-                    <SheetTitle>Interaction History</SheetTitle>
+                    <SheetTitle className="text-lg sm:text-xl">Interaction History</SheetTitle>
                   </SheetHeader>
                   <div className="flex-grow overflow-y-auto">
-                    <div className="space-y-4 pr-6">
+                    <div className="space-y-3 sm:space-y-4 pr-2 sm:pr-6">
                       {interactionsState.history.length > 0 ? (
                         interactionsState.history.map((interaction) => (
                           <button key={interaction.id} onClick={() => restoreInteraction(interaction)} className="block w-full text-left">
                             <Card className="hover:bg-secondary transition-colors border-primary/20">
-                              <CardContent className="p-4">
+                              <CardContent className="p-3 sm:p-4">
                                 <p className="text-sm font-medium truncate">{interaction.input}</p>
                                 <p className="text-xs text-muted-foreground mt-1">
                                   {formatDistanceToNow(new Date(interaction.timestamp), { addSuffix: true })}
@@ -226,13 +226,13 @@ export function TryItToolkit() {
                           </button>
                         ))
                       ) : (
-                        <p className="text-sm text-muted-foreground text-center py-8">No history yet.</p>
+                        <p className="text-sm text-muted-foreground text-center py-6 sm:py-8">No history yet.</p>
                       )}
                     </div>
                   </div>
                   <SheetFooter>
                     <SheetClose asChild>
-                      <Button variant="outline">Close</Button>
+                      <Button variant="outline" size="sm" className="text-xs sm:text-sm">Close</Button>
                     </SheetClose>
                   </SheetFooter>
                 </SheetContent>
@@ -240,55 +240,55 @@ export function TryItToolkit() {
             </TooltipProvider>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6 pt-6">
-          <div className="min-h-[200px] rounded-xl border bg-white/50 p-4 shadow-inner">
+        <CardContent className="space-y-4 sm:space-y-6 pt-4 sm:pt-6">
+          <div className="min-h-[150px] sm:min-h-[200px] rounded-lg sm:rounded-xl border bg-white/50 p-3 sm:p-4 shadow-inner">
             {isLoading ? (
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 <div className="flex items-center gap-2">
-                  <Loader className="size-4 animate-spin text-emerald-500" />
-                  <span className="text-sm text-muted-foreground">Generating response with EcoMind AI...</span>
+                  <Loader className="size-3 sm:size-4 animate-spin text-emerald-500" />
+                  <span className="text-xs sm:text-sm text-muted-foreground">Generating response with EcoMind AI...</span>
                 </div>
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-3 sm:h-4 w-full" />
+                <Skeleton className="h-3 sm:h-4 w-full" />
+                <Skeleton className="h-3 sm:h-4 w-3/4" />
               </div>
             ) : output ? (
               <div>
-                <p className="text-sm whitespace-pre-wrap text-gray-800">{output}</p>
-                <div className="mt-4 text-xs text-muted-foreground">
+                <p className="text-xs sm:text-sm whitespace-pre-wrap text-gray-800">{output}</p>
+                <div className="mt-3 sm:mt-4 text-xs text-muted-foreground">
                   {debugInfo}
                 </div>
               </div>
             ) : (
               <div className="flex items-center justify-center h-full">
                 <div className="text-center">
-                  <Leaf className="h-8 w-8 text-emerald-400 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Enter a prompt to start a conversation with EcoMind AI</p>
+                  <Leaf className="h-6 w-6 sm:h-8 sm:w-8 text-emerald-400 mx-auto mb-2" />
+                  <p className="text-xs sm:text-sm text-muted-foreground px-2">Enter a prompt to start a conversation with EcoMind AI</p>
                 </div>
               </div>
             )}
           </div>
           
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             <div className="flex items-center gap-2">
-              <Brain className="h-4 w-4 text-emerald-500" />
+              <Brain className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-500" />
               <p className="text-xs font-medium text-muted-foreground">Try these examples...</p>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {PRESET_PROMPTS.map((p, index) => (
                 <Button 
                   key={p} 
                   variant="outline" 
                   size="sm" 
                   onClick={() => handlePresetClick(p)} 
-                  className={`text-xs sm:text-sm transition-colors rounded-full px-3 ` +
+                  className={`text-[10px] sm:text-xs transition-colors rounded-full px-2 py-1 sm:px-3 ` +
                     (index % 4 === 0 ? 'bg-emerald-100 hover:bg-emerald-600 border-emerald-200 text-emerald-800 hover:text-white' : '') +
                     (index % 4 === 1 ? 'bg-teal-100 hover:bg-teal-600 border-teal-200 text-teal-800 hover:text-white' : '') +
                     (index % 4 === 2 ? 'bg-cyan-100 hover:bg-cyan-600 border-cyan-200 text-cyan-800 hover:text-white' : '') +
                     (index % 4 === 3 ? 'bg-green-100 hover:bg-green-600 border-green-200 text-green-800 hover:text-white' : '')}
                 >
-                  {p}
-                  <ChevronRight className="size-3 ml-1" />
+                  <span className="truncate max-w-[120px] sm:max-w-[160px]">{p}</span>
+                  <ChevronRight className="size-2.5 sm:size-3 ml-1 flex-shrink-0" />
                 </Button>
               ))}
             </div>
@@ -303,15 +303,15 @@ export function TryItToolkit() {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Ask EcoMind AI anything..."
-              className="pr-12 min-h-[100px] border-emerald-200 focus-visible:ring-emerald-500 rounded-xl resize-none"
+              className="pr-10 sm:pr-12 min-h-[80px] sm:min-h-[100px] border-emerald-200 focus-visible:ring-emerald-500 rounded-lg sm:rounded-xl resize-none text-sm sm:text-base"
             />
             <Button 
               type="submit" 
               size="icon" 
-              className="absolute bottom-2.5 right-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 rounded-full shadow-lg"
+              className="absolute bottom-2 right-2 sm:bottom-2.5 sm:right-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 rounded-full shadow-lg h-8 w-8 sm:h-10 sm:w-10"
               disabled={isLoading || !prompt.trim()}
             >
-              {isLoading ? <Loader className="size-4 animate-spin" /> : <Send className="size-4" />}
+              {isLoading ? <Loader className="size-3 sm:size-4 animate-spin" /> : <Send className="size-3 sm:size-4" />}
               <span className="sr-only">Submit</span>
             </Button>
           </form>

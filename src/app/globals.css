@@ -55,6 +55,8 @@
   }
   body {
     @apply bg-background text-foreground font-body;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   /* Custom background pattern */
@@ -65,6 +67,13 @@
       radial-gradient(#ccfbf1 1px, transparent 1px);
     background-size: 40px 40px;
     background-position: 0 0, 20px 20px;
+  }
+  
+  /* Mobile-specific improvements */
+  @media (max-width: 640px) {
+    body {
+      background-size: 20px 20px;
+    }
   }
 }
 
@@ -84,4 +93,11 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #6ee7b7;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
 }
