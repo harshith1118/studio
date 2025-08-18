@@ -8,13 +8,19 @@ const generateAIResponse = async (prompt) => {
   
   try {
     // Log API key status for debugging (without revealing the actual key)
-    console.log('Gemini API Key present:', !!process.env.GOOGLE_GENERATIVE_AI_API_KEY);
-    if (process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
-      console.log('Gemini API Key length:', process.env.GOOGLE_GENERATIVE_AI_API_KEY.length);
+    console.log('Gemini API Key present:', !!process.env.GEMINI_API_KEY);
+    if (process.env.GEMINI_API_KEY) {
+      console.log('Gemini API Key length:', process.env.GEMINI_API_KEY.length);
+    } else {
+      console.log('ERROR: Gemini API Key not found in environment variables');
+      // Check other possible environment variable names
+      console.log('Checking other possible environment variables:');
+      console.log('GOOGLE_GENERATIVE_AI_API_KEY present:', !!process.env.GOOGLE_GENERATIVE_AI_API_KEY);
+      console.log('GOOGLE_API_KEY present:', !!process.env.GOOGLE_API_KEY);
     }
 
     // Initialize Google Generative AI client
-    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     
     // Generate content using Gemini with optimized parameters for speed

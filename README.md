@@ -18,9 +18,9 @@ An interactive Next.js application that demonstrates AI capabilities using Googl
    ```bash
    npm install
    ```
-3. Create a `.env.local` file based on `.env.local`:
+3. Create a `.env.local` file based on `.env.example`:
    ```bash
-   cp .env.local .env.local
+   cp .env.example .env.local
    ```
 4. Add your Google Generative AI API key to `.env.local`
 5. Run the development server:
@@ -29,6 +29,27 @@ An interactive Next.js application that demonstrates AI capabilities using Googl
    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the demo.
+
+## Environment Variables
+
+To run this project, you need to set the following environment variables:
+
+- `GEMINI_API_KEY` - Your Google Generative AI API key
+
+You can get your API key from [Google AI Studio](https://aistudio.google.com/).
+
+## Deployment
+
+### Netlify
+
+To deploy on Netlify:
+
+1. Connect your repository to Netlify
+2. In the Netlify dashboard, go to "Site settings" > "Environment variables"
+3. Add `GEMINI_API_KEY` with your actual API key
+4. Set the build command to `next build`
+5. Set the publish directory to `.next`
+6. Trigger a new deploy
 
 ## Available Scripts
 
