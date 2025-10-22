@@ -1,2 +1,5 @@
-// Local AI simulation - no external dependencies needed
-console.log('Local AI simulation ready');
+// Development AI simulation using Langchain
+import { generateAIResponseWithCircuitBreaker } from './langchain-service-advanced';
+
+console.log('AI service with Langchain integration ready');
+export { generateAIResponseWithCircuitBreaker };
