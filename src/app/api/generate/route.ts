@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { generateAIResponseWithCircuitBreaker } from '../../../ai/langchain-service-advanced';
+import { generateAIResponseWithGroqAndCircuitBreaker } from '../../../ai/groq-service';
 
 console.log('API route loaded');
 
@@ -18,9 +18,9 @@ export async function POST(request: Request) {
       );
     }
     
-    // Generate response using Langchain with advanced retry logic and circuit breaker
-    console.log('Generating AI response using advanced Langchain with circuit breaker...');
-    const result = await generateAIResponseWithCircuitBreaker(prompt);
+    // Generate response using Groq with advanced retry logic and circuit breaker
+    console.log('Generating AI response using Groq with circuit breaker...');
+    const result = await generateAIResponseWithGroqAndCircuitBreaker(prompt);
     console.log('AI response generated:', result);
     
     return NextResponse.json({ result });
